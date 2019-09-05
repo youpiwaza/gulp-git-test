@@ -17,3 +17,5 @@ src/*
 
 # Keep the /src folder
 !src/.gitkeep
+
+clonehere/
