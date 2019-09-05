@@ -1,4 +1,5 @@
 //// config
+const repoUri = 'https://github.com/youpiwaza/mock-repo-w-gulp-sass';
 const pathWhereToClone = './clonehere/sub';
 
 // // Resources
@@ -28,7 +29,6 @@ task('clean', () => {
 
 // Clone my repo where it's needed
 task('clone-my-repo', (done) => {
-  const repoUri = 'https://github.com/youpiwaza/chaos-toolbox';
   // Clone remote repo to sub folder ($CWD/clonehere/sub)
   git.clone(repoUri, {args: pathWhereToClone}, (status) => {
 
@@ -116,11 +116,14 @@ task('make-cloned-repo-dist', (done) => {
 
 // Default tesk, executed when using 'gulp'
 //  Clean then clone
-task('default', series('warn', 'clean', 'clone-my-repo'));
+// task('default', series('warn', 'clean', 'clone-my-repo'));
 task('get-private-repo', series('warn', 'clean', 'clone-my-private-repo'));
 // task('clone-n-install', series('clean', 'clone-my-private-repo', 'log' ));
-task('clone-n-install', series('warn', 'clean', 'clone-my-private-repo', 'yarn-cloned-repo'));
-task('clone-n-install-n-dist', series('warn', 'clean', 'clone-my-private-repo', 'yarn-cloned-repo', 'make-cloned-repo-dist'));
+task('clone-n-install', series('warn', 'clean', 'clone-my-repo', 'yarn-cloned-repo'));
+// task('clone-n-install-n-dist', series('warn', 'clean', 'clone-my-repo', 'yarn-cloned-repo', 'make-cloned-repo-dist'));
+
+
+task('default', series('warn', 'clean', 'clone-my-repo', 'yarn-cloned-repo', 'make-cloned-repo-dist'));
 
 
 

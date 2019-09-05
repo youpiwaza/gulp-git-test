@@ -5,9 +5,9 @@ Testing git-gulp capabilities (clone).. and install dependancies.. and run gulp 
 ## Tasks
 
 To run everything (in series)
-> clone-n-install-n-dist
+> gulp
 
-Check gulpfile for independant tasks or try other things
+Check gulpfile for tasks step by step or try other things
 
 ### Resources
 
