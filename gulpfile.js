@@ -3,12 +3,15 @@
 const {
   series,
   task,
+  src,
+  dest
 } = require('gulp');
 
 const c = require('ansi-colors');
 const del = require('del');
 const fancyLog = require('fancy-log');
 const git = require('gulp-git');
+const yarn = require('gulp-yarn');
 
 
 // // Tasks
@@ -52,6 +55,13 @@ task('clone-my-private-repo', async () => {
       await Promise.resolve(`Erreur lors du clonage du repo '${repoUri}'`);
     }
   })
+});
+
+task('yarn', function() {
+    //                                                                        if not present, create
+    return src(['./clonehere/sub/package.json', './clonehere/sub/yarn.lock'], { allowEmpty: true })
+        .pipe(dest('./clonehere/sub'))
+        .pipe(yarn());
 });
 
 // Default tesk, executed when using 'gulp'
