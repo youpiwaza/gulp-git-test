@@ -1,7 +1,7 @@
 // // Resources
 // Plugins
 const {
-  parallel,
+  series,
   task,
 } = require('gulp');
 
@@ -12,9 +12,10 @@ const git = require('gulp-git');
 
 // // Tasks
 
-// Default tesk, executed when using 'gulp'
+
+
 // Clone remote repo to sub folder ($CWD/sub/folder/git-test)
-task('default', function() {
+task('clone-mine', function() {
   git.clone('https://github.com/youpiwaza/chaos-toolbox', {args: './clonehere/sub'}, function(status) {
 
     if(status === undefined) {
@@ -32,3 +33,6 @@ task('default', function() {
 task('clean', function(){
   return del('clonehere/**', {force:true});
 });
+
+// Default tesk, executed when using 'gulp'
+task('default', series('clean', 'clone-mine'));
