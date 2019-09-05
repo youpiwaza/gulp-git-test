@@ -1,6 +1,16 @@
 # test-gulp-git-clone-install-make-dist
 Testing git-gulp capabilities (clone).. and install dependancies.. and run gulp on cloned repo
 
+
+## Tasks
+
+To run everything (in series)
+> clone-n-install-n-dist
+
+Check gulpfile for independant tasks or try other things
+
+### Resources
+
 // gulp-git, allow git functions
 https://www.npmjs.com/package/gulp-git
 
