@@ -73,6 +73,7 @@ task('warn', (done) => {
     done();
 });
 
+// Cloned repo > execute yarn
 task('yarn-cloned-repo', () => {
     //                                                                        if not present, create
     return src([`${pathWhereToClone}/package.json`, `${pathWhereToClone}/yarn.lock`], { allowEmpty: true })
@@ -80,32 +81,7 @@ task('yarn-cloned-repo', () => {
         .pipe(yarn());
 });
 
-// Run gulp on cloned/installed repo
-//      https://stackoverflow.com/questions/38550938/excute-command-in-gulp-for-sub-folder
-//          KO windows ?
-// task('make-dist', function(done) {
-//   spawn('npm', ['install'], { cwd: pathWhereToClone, stdio: 'inherit' })
-//     .on('close', done);
-// });
-
-//      https://stackoverflow.com/questions/29511491/running-a-shell-command-from-gulp
-//          KO windows ?
-// task('my-task', function (cb) {
-//   var cmd = spawn('cmd', ['arg1', 'agr2'], {stdio: 'inherit'});
-//   cmd.on('close', function (code) {
-//     console.log('my-task exited with code ' + code);
-//     cb(code);
-//   });
-// });
-
-//      https://stackoverflow.com/questions/45841902/how-to-run-ng-build-from-gulp-using-child-process-spawn-or-disable-all-output-in
-//          OK  cross platforms :D
-// task('my-task2', () => {
-//   spawn2('gulp', [], { cwd: pathWhereToClone, stdio: 'inherit' });
-// });
-
-
-// Mon test
+// Cloned repo > execute gulp
 task('make-cloned-repo-dist', (done) => {
   spawn2('gulp', [], { cwd: pathWhereToClone, stdio: 'inherit' })
   .on('close', done);
