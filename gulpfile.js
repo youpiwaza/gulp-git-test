@@ -16,7 +16,9 @@ const fancyLog = require('fancy-log');
 const git = require('gulp-git');
 const yarn = require('gulp-yarn');
 
-const spawn = require('child_process').spawn;
+// const spawn = require('child_process').spawn;
+const spawn2 = require('cross-spawn');
+
 
 // // Tasks
 // Delete cloned repo folder content
@@ -71,19 +73,54 @@ task('warn', (done) => {
     done();
 });
 
-task('yarn', () => {
+task('yarn-cloned-repo', () => {
     //                                                                        if not present, create
     return src([`${pathWhereToClone}/package.json`, `${pathWhereToClone}/yarn.lock`], { allowEmpty: true })
         .pipe(dest(pathWhereToClone))
         .pipe(yarn());
 });
 
+// Run gulp on cloned/installed repo
+//      https://stackoverflow.com/questions/38550938/excute-command-in-gulp-for-sub-folder
+//          KO windows ?
+// task('make-dist', function(done) {
+//   spawn('npm', ['install'], { cwd: pathWhereToClone, stdio: 'inherit' })
+//     .on('close', done);
+// });
+
+//      https://stackoverflow.com/questions/29511491/running-a-shell-command-from-gulp
+//          KO windows ?
+// task('my-task', function (cb) {
+//   var cmd = spawn('cmd', ['arg1', 'agr2'], {stdio: 'inherit'});
+//   cmd.on('close', function (code) {
+//     console.log('my-task exited with code ' + code);
+//     cb(code);
+//   });
+// });
+
+//      https://stackoverflow.com/questions/45841902/how-to-run-ng-build-from-gulp-using-child-process-spawn-or-disable-all-output-in
+//          OK  cross platforms :D
+// task('my-task2', () => {
+//   spawn2('gulp', [], { cwd: pathWhereToClone, stdio: 'inherit' });
+// });
+
+
+// Mon test
+task('make-cloned-repo-dist', (done) => {
+  spawn2('gulp', [], { cwd: pathWhereToClone, stdio: 'inherit' })
+  .on('close', done);
+});
+
+
+
+
 // Default tesk, executed when using 'gulp'
 //  Clean then clone
 task('default', series('warn', 'clean', 'clone-my-repo'));
 task('get-private-repo', series('warn', 'clean', 'clone-my-private-repo'));
 // task('clone-n-install', series('clean', 'clone-my-private-repo', 'log' ));
-task('clone-n-install', series('warn', 'clean', 'clone-my-private-repo', 'yarn'));
+task('clone-n-install', series('warn', 'clean', 'clone-my-private-repo', 'yarn-cloned-repo'));
+task('clone-n-install-n-dist', series('warn', 'clean', 'clone-my-private-repo', 'yarn-cloned-repo', 'make-cloned-repo-dist'));
 
 
 
