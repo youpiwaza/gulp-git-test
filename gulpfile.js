@@ -21,39 +21,37 @@ task('clean', () => {
 });
 
 // Clone my repo where it's needed
-task('clone-my-repo', async () => {
+task('clone-my-repo', (done) => {
   const repoUri = 'https://github.com/youpiwaza/chaos-toolbox';
   // Clone remote repo to sub folder ($CWD/clonehere/sub)
-  git.clone(repoUri, {args: './clonehere/sub'}, async (status) => {
+  git.clone(repoUri, {args: './clonehere/sub'}, (status) => {
 
     if(status === undefined) {
       fancyLog(c.green(`Repo '${c.cyan.italic(repoUri)}' cloné avec succès`));
-      await Promise.resolve(`Repo '${repoUri}' cloné avec succès`);
     }
     else {
       fancyLog(c.bold.red(`Erreur lors du clonage du repo '${c.cyan.italic(repoUri)}'`));
       fancyLog(status);
-      await Promise.resolve(`Erreur lors du clonage du repo '${repoUri}'`);
     }
+    done();
   })
 });
 
 // Clone private repo
 //  Automatically ask for github connexion via a popup <3
-task('clone-my-private-repo', async () => {
+task('clone-my-private-repo', (done) => {
   const repoUri = 'https://github.com/youpiwaza/boilerplate-exercice';
   // Clone remote repo to sub folder ($CWD/clonehere/sub)
-  git.clone(repoUri, {args: './clonehere/sub'}, async (status) => {
+  git.clone(repoUri, {args: './clonehere/sub'}, (status) => {
 
     if(status === undefined) {
       fancyLog(c.green(`Repo '${c.cyan.italic(repoUri)}' cloné avec succès`));
-      await Promise.resolve(`Repo '${repoUri}' cloné avec succès`);
     }
     else {
       fancyLog(c.bold.red(`Erreur lors du clonage du repo '${c.cyan.italic(repoUri)}'`));
       fancyLog(status);
-      await Promise.resolve(`Erreur lors du clonage du repo '${repoUri}'`);
     }
+    done();
   })
 });
 
