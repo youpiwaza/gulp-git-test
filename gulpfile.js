@@ -55,7 +55,13 @@ task('clone-my-private-repo', (done) => {
   })
 });
 
-task('yarn', function() {
+// Test async
+// task('log', (done) => {
+//     console.log('yarn');
+//     done();
+// });
+
+task('yarn', () => {
     //                                                                        if not present, create
     return src(['./clonehere/sub/package.json', './clonehere/sub/yarn.lock'], { allowEmpty: true })
         .pipe(dest('./clonehere/sub'))
@@ -66,3 +72,21 @@ task('yarn', function() {
 //  Clean then clone
 task('default', series('clean', 'clone-my-repo'));
 task('get-private-repo', series('clean', 'clone-my-private-repo'));
+// task('clone-n-install', series('clean', 'clone-my-private-repo', 'log' ));
+task('clone-n-install', series('clean', 'clone-my-private-repo', 'yarn'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
