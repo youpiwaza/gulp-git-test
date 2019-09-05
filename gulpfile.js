@@ -5,7 +5,7 @@ const {
   task,
 } = require('gulp');
 
-const colors = require('ansi-colors');
+const c = require('ansi-colors');
 const del = require('del');
 const fancyLog = require('fancy-log');
 const git = require('gulp-git');
@@ -19,17 +19,18 @@ task('clean', () => {
 
 // Clone my repo where it's needed
 task('clone-my-repo', async () => {
+  const repoUri = 'https://github.com/youpiwaza/chaos-toolbox';
   // Clone remote repo to sub folder ($CWD/clonehere/sub)
-  git.clone('https://github.com/youpiwaza/chaos-toolbox', {args: './clonehere/sub'}, async (status) => {
+  git.clone(repoUri, {args: './clonehere/sub'}, async (status) => {
 
     if(status === undefined) {
-      fancyLog(colors.green('Repo cloné avec succès'));
-      await Promise.resolve('Repo cloné avec succès');
+      fancyLog(c.green(`Repo '${c.cyan.italic(repoUri)}' cloné avec succès`));
+      await Promise.resolve(`Repo '${repoUri}' cloné avec succès`);
     }
     else {
-      fancyLog(colors.red('Error lel'));
+      fancyLog(c.bold.red(`Erreur lors du clonage du repo '${c.cyan.italic(repoUri)}'`));
       fancyLog(status);
-      await Promise.resolve('Error lel');
+      await Promise.resolve(`Erreur lors du clonage du repo '${repoUri}'`);
     }
   })
 });
