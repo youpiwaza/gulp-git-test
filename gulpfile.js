@@ -88,6 +88,32 @@ task('make-cloned-repo-dist', (done) => {
 });
 
 
+// Change branch int a git project in a subfolder
+const branchName = 'TEST-table-multiplication';
+//      KO in subfolder
+// task('checkout-repo', (done) => {
+//   // Checkout cloned repo
+//   git.checkout('TEST-table-multiplication', {args: repoPath}, (status) => {
+//
+//     if(status === undefined) {
+//       fancyLog(c.green(`Repo '${c.cyan.italic(repoUri)}' > Passage sur la branche '${c.blue.italic(branchName)}'`));
+//     }
+//     else {
+//       fancyLog(c.bold.red(`Repo '${c.cyan.italic(repoUri)}' > Erreur lors changement de branche vers '${c.blue.italic(branchName)}'`));
+//       fancyLog(status);
+//     }
+//     done();
+//   })
+// });
+
+// OK
+task('checkout-repo-with-spawn', (done) => {
+  // Checkout cloned repo
+  spawn2('git checkout', [branchName], { cwd: pathWhereToClone, stdio: 'inherit' })
+  .on('close', done);
+});
+
+
 
 
 // Default tesk, executed when using 'gulp'
@@ -97,6 +123,7 @@ task('get-private-repo', series('warn', 'clean', 'clone-my-private-repo'));
 // task('clone-n-install', series('clean', 'clone-my-private-repo', 'log' ));
 task('clone-n-install', series('warn', 'clean', 'clone-my-repo', 'yarn-cloned-repo'));
 // task('clone-n-install-n-dist', series('warn', 'clean', 'clone-my-repo', 'yarn-cloned-repo', 'make-cloned-repo-dist'));
+task('clone-private-n-install-n-dist', series('warn', 'clean', 'clone-my-private-repo', 'yarn-cloned-repo', 'make-cloned-repo-dist'));
 
 
 task('default', series('warn', 'clean', 'clone-my-repo', 'yarn-cloned-repo', 'make-cloned-repo-dist'));
